@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal|center_vertical"
+    android:layout_margin="8dp"
+    android:orientation="vertical"
+    tools:context=".TambahBarang">
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edtNamaBarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nama Barang"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/black" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edtJumlahBarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Jumlah Barang"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/black" />
+
+    <com.rengwuxian.materialedittext.MaterialEditText
+        android:id="@+id/edtHargaBarang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Harga Barang"
+        android:inputType="number"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        app:met_floatingLabel="highlight"
+        app:met_primaryColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/btnDataBarang"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:background="@color/colorAccent"
+        android:text="Kirim"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="22sp" />
+
+
+</LinearLayout>
