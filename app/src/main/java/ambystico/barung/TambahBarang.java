@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,15 +23,15 @@ import butterknife.ButterKnife;
 public class TambahBarang extends AppCompatActivity {
 
     @BindView(R.id.btnDataBarang)
-    Button btnDataBarang;
+        Button btnDataBarang;
     @BindView(R.id.edtHargaBarang)
-    MaterialEditText edtHargaBarang;
+        MaterialEditText edtHargaBarang;
     @BindView(R.id.edtJumlahBarang)
-    MaterialEditText edtJumlahBarang;
+        MaterialEditText edtJumlahBarang;
     @BindView(R.id.edtNamaBarang)
-    MaterialEditText edtNamaBarang;
+        MaterialEditText edtNamaBarang;
 
-    private String URL = "http://192.168.8.100/custom/Dummy/Barang/Process/insert_barang.php";
+    private String URL = "http://10.164.116.214/custom/Dummy/Barang/Process/insert_barang.php";
 
     RequestQueue requestQueue;
     String namaBarang, jumlahBarang, hargaBarang;

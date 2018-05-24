@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import ambystico.barung.DataBarang;
 import ambystico.barung.R;
 import ambystico.barung.RecyclerViewAdapter;
 import ambystico.barung.TambahBarang;
@@ -41,11 +43,12 @@ public class Fragment_Home extends Fragment {
     RecyclerViewAdapter adapter;
     RecyclerView.LayoutManager layoutManager;
     ArrayList<HashMap<String, String>> arrayBarang;
+    DataBarang dataBarang;
 
 
     RequestQueue requestQueue;
 
-    String URL = "http://192.168.8.100/custom/Dummy/Barang/Process/tampil_barang.php";
+    String URL = "http://10.164.116.214/custom/Dummy/Barang/Process/tampil_barang.php";
     String TAG = Fragment_Home.class.getSimpleName();
 
     public Fragment_Home() {
@@ -65,21 +68,41 @@ public class Fragment_Home extends Fragment {
         layoutManager = new LinearLayoutManager(getContext());
         rvBarang.setLayoutManager(layoutManager);
 
+        rvBarang.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+                Toast.makeText(getContext(), "clicked", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+        });
+
         requestQueue = Volley.newRequestQueue(getContext());
+        dataBarang = new DataBarang();
 
         StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d(TAG, "onResponse: " + response);
                 try{
+                    DataBarang dataBarang = new DataBarang();
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("dataBarang");
                     for (int i = 0; i < jsonArray.length(); i++) {
                         JSONObject json = jsonArray.getJSONObject(i);
                         HashMap<String, String> data = new HashMap<>();
-                        data.put("nama_barang", json.getString("nama_barang"));
-                        data.put("harga_barang", json.getString("harga_barang"));
-                        data.put("jumlah_barang", json.getString("jumlah_barang"));
+                        data.put(dataBarang.nama_barang, json.getString("nama_barang"));
+                        data.put(dataBarang.harga_barang, json.getString("harga_barang"));
+                        data.put(dataBarang.jumlah_barang, json.getString("jumlah_barang"));
+
 
                         arrayBarang.add(data);
 
