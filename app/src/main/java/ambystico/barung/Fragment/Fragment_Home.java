@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -45,10 +44,9 @@ public class Fragment_Home extends Fragment {
     List<DataBarang> list = new ArrayList<>();
     RecyclerViewAdapter adapter;
 
-
     RequestQueue requestQueue;
 
-    String URL = "http://192.168.8.103/custom/Dummy/Barang/Process/tampil_barang.php";
+    String URL = "http://192.168.8.104/custom/Dummy/Barang/Process/tampil_barang.php";
     String TAG = Fragment_Home.class.getSimpleName();
 
     public Fragment_Home() {
@@ -69,35 +67,32 @@ public class Fragment_Home extends Fragment {
         rvBarang.setItemAnimator(new DefaultItemAnimator());
         requestQueue = Volley.newRequestQueue(getContext());
 
-        StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "onResponse: " + response);
-                try{
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("dataBarang");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject json = jsonArray.getJSONObject(i);
-                        DataBarang dataBarang = new DataBarang();
-                        dataBarang.harga_barang = json.getString("harga_barang");
-                        dataBarang.jumlah_barang = json.getString("jumlah_barang");
-                        dataBarang.nama_barang = json.getString("nama_barang");
+        StringRequest request = new StringRequest(Request.Method.POST, URL, response -> {
+            Log.d(TAG, "onResponse: " + response);
+            try{
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray jsonArray = jsonObject.getJSONArray("dataBarang");
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject json = jsonArray.getJSONObject(i);
+                    DataBarang dataBarang = new DataBarang();
+                    dataBarang.harga_barang = json.getString("harga_barang");
+                    dataBarang.jumlah_barang = json.getString("jumlah_barang");
+                    dataBarang.nama_barang = json.getString("nama_barang");
 
-                        list.add(dataBarang);
-                        adapter = new RecyclerViewAdapter(list);
-                        Log.i(TAG, "onResponse: Data Array : " + dataBarang);
-                        Log.i(TAG, "onResponse: Array Barang ; " + list);
-                    }
-
-                    rvBarang.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                    list.add(dataBarang);
+                    adapter = new RecyclerViewAdapter(getContext(), list);
+                    Log.i(TAG, "onResponse: Data Array : " + dataBarang);
+                    Log.i(TAG, "onResponse: Array Barang ; " + list);
                 }
 
+                rvBarang.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -107,12 +102,9 @@ public class Fragment_Home extends Fragment {
 
         requestQueue.add(request);
 
-        fabAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(getContext(), TambahBarang.class);
-                startActivity(i);
-            }
+        fabAdd.setOnClickListener(view1 -> {
+            Intent i = new Intent(getContext(), TambahBarang.class);
+            startActivity(i);
         });
 
         return view;

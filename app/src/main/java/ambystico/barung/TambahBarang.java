@@ -55,8 +55,7 @@ public class TambahBarang extends AppCompatActivity {
                    public void onResponse(String response) {
                        Toast.makeText(TambahBarang.this, response, Toast.LENGTH_SHORT).show();
                    }
-               },
-                       new Response.ErrorListener() {
+               }, new Response.ErrorListener() {
                            @Override
                            public void onErrorResponse(VolleyError error) {
                                Toast.makeText(TambahBarang.this, error.toString(), Toast.LENGTH_SHORT).show();

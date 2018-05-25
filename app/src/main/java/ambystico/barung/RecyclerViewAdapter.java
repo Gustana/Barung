@@ -1,10 +1,14 @@
 package ambystico.barung;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,6 +18,8 @@ import butterknife.ButterKnife;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.RecyclerHolder> {
 
     private List<DataBarang> dataBarangList;
+    Context context;
+    Intent i;
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,6 +34,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.txtJumlah.setText(dataBarang.jumlah_barang);
         holder.txtNama.setText(dataBarang.nama_barang);
 
+        holder.itemView.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("nama_barang", dataBarang.nama_barang);
+            bundle.putString("harga_barang", dataBarang.harga_barang);
+            bundle.putString("jumlah_barang", dataBarang.jumlah_barang);
+            i.putExtras(bundle);
+            context.startActivity(i);
+        });
     }
 
     @Override
@@ -47,10 +61,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
     }
 
-    public RecyclerViewAdapter(List<DataBarang> dataBarangList){
+    public RecyclerViewAdapter(Context context, List<DataBarang> dataBarangList){
         this.dataBarangList = dataBarangList;
+        this.context = context;
+        i = new Intent(context, Dialogue_dataBarang.class);
     }
 
 
