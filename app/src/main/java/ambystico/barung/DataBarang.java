@@ -4,10 +4,6 @@ public class DataBarang {
 
     public String nama_barang, harga_barang, jumlah_barang;
 
-    public DataBarang(){
-
-    }
-
     public String getNama_barang() {
         return nama_barang;
     }
