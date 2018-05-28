@@ -9,6 +9,12 @@
     android:orientation="vertical"
     tools:context=".TambahBarang">
 
+    <ImageView
+        android:id="@+id/imgBarang"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/ic_add_pic"/>
+
     <com.rengwuxian.materialedittext.MaterialEditText
         android:id="@+id/edtNamaBarang"
         android:layout_width="match_parent"

@@ -37,10 +37,6 @@ public class Dialogue_dataBarang extends Activity {
         MaterialEditText edtHargaBarang;
     @BindView(R.id.imgEditHargaBarang)
         ImageView imgEditHargaBarang;
-    @BindView(R.id.imgEditJumlahBarang)
-        ImageView imgEditJumlahBarang;
-    @BindView(R.id.imgEditNamaBarang)
-        ImageView imgEditNamaBarang;
 
     final String URL = "http://192.168.8.104/custom/Dummy/Barang/Process/update_barang.php";
     String nama_barang, harga_barang, jumlah_barang;
@@ -62,8 +58,6 @@ public class Dialogue_dataBarang extends Activity {
         btnKirim.setEnabled(false);
 
         editImageClick(imgEditHargaBarang, edtHargaBarang);
-        editImageClick(imgEditNamaBarang, edtNamaBarang);
-        editImageClick(imgEditJumlahBarang, edtJumlahBarang);
 
         edtHargaBarang.setText(harga_barang);
         edtJumlahBarang.setText(jumlah_barang);
@@ -95,10 +89,10 @@ public class Dialogue_dataBarang extends Activity {
                 @Override
                 protected Map<String, String> getParams(){
                     Map<String, String> params = new HashMap<>();
+                    DataBarang dataBarang = new DataBarang();
 
                     params.put("nama_barang", nama_barang);
                     params.put("harga_barang", harga_barang);
-                    params.put("jumlah_barang", jumlah_barang);
 
                     return params;
                 }

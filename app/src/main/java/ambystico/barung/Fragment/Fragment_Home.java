@@ -1,7 +1,10 @@
 package ambystico.barung.Fragment;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -45,14 +48,28 @@ public class Fragment_Home extends Fragment {
     RecyclerViewAdapter adapter;
 
     RequestQueue requestQueue;
+    StringRequest request;
+    Handler handler = new Handler();
+    int delay = 1000;
 
     String URL = "http://192.168.8.104/custom/Dummy/Barang/Process/tampil_barang.php";
     String TAG = Fragment_Home.class.getSimpleName();
+    Context context;
+
+
+    ProgressDialog progressDialog;
+
 
     public Fragment_Home() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        this.context = context;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,7 +84,7 @@ public class Fragment_Home extends Fragment {
         rvBarang.setItemAnimator(new DefaultItemAnimator());
         requestQueue = Volley.newRequestQueue(getContext());
 
-        StringRequest request = new StringRequest(Request.Method.POST, URL, response -> {
+        request = new StringRequest(Request.Method.POST, URL, response -> {
             Log.d(TAG, "onResponse: " + response);
             try{
                 JSONObject jsonObject = new JSONObject(response);
@@ -80,7 +97,7 @@ public class Fragment_Home extends Fragment {
                     dataBarang.nama_barang = json.getString("nama_barang");
 
                     list.add(dataBarang);
-                    adapter = new RecyclerViewAdapter(getContext(), list);
+                    adapter = new RecyclerViewAdapter(context, list);
                     Log.i(TAG, "onResponse: Data Array : " + dataBarang);
                     Log.i(TAG, "onResponse: Array Barang ; " + list);
                 }
@@ -103,13 +120,29 @@ public class Fragment_Home extends Fragment {
         requestQueue.add(request);
 
         fabAdd.setOnClickListener(view1 -> {
-            Intent i = new Intent(getContext(), TambahBarang.class);
+            Intent i = new Intent(context, TambahBarang.class);
             startActivity(i);
         });
+
+        try{
+            handler.postDelayed(runnable, delay);
+        }catch (Exception e){
+            Log.e(TAG, "onCreate: error" );
+            e.printStackTrace();
+        }
+
 
         return view;
     }
 
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.i(TAG, "run: action");
+            requestQueue.add(request);
+            handler.postDelayed(runnable, delay);
+        }
+    };
 
 
 }

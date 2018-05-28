@@ -1,9 +1,10 @@
 package ambystico.barung;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -22,6 +23,7 @@ import butterknife.ButterKnife;
 
 public class TambahBarang extends AppCompatActivity {
 
+    private static final String TAG = TambahBarang.class.getSimpleName();
     @BindView(R.id.btnDataBarang)
         Button btnDataBarang;
     @BindView(R.id.edtHargaBarang)
@@ -30,8 +32,12 @@ public class TambahBarang extends AppCompatActivity {
         MaterialEditText edtJumlahBarang;
     @BindView(R.id.edtNamaBarang)
         MaterialEditText edtNamaBarang;
+    @BindView(R.id.imgBarang)
+        ImageView imgBarang;
 
-    private String URL = "http://10.164.116.214/custom/Dummy/Barang/Process/insert_barang.php";
+    StringRequest request;
+
+    private String URL = "http://192.168.8.104/custom/Dummy/Barang/Process/insert_barang.php";
 
     RequestQueue requestQueue;
     String namaBarang, jumlahBarang, hargaBarang;
@@ -45,38 +51,42 @@ public class TambahBarang extends AppCompatActivity {
 
         requestQueue = Volley.newRequestQueue(this);
 
-        btnDataBarang.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getValue();
+        btnDataBarang.setOnClickListener(view -> {
+            getValue();
 
-               StringRequest request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
-                   @Override
-                   public void onResponse(String response) {
-                       Toast.makeText(TambahBarang.this, response, Toast.LENGTH_SHORT).show();
-                   }
-               }, new Response.ErrorListener() {
-                           @Override
-                           public void onErrorResponse(VolleyError error) {
-                               Toast.makeText(TambahBarang.this, error.toString(), Toast.LENGTH_SHORT).show();
-                           }
-                       })
-               {
-                   @Override
-                   protected Map<String, String> getParams(){
-                       Map<String, String> params = new HashMap<>();
-                       params.put("nama_barang", namaBarang);
-                       params.put("harga_barang", hargaBarang);
-                       params.put("jumlah_barang", jumlahBarang);
+           request = new StringRequest(Request.Method.POST, URL, new Response.Listener<String>() {
+               @Override
+               public void onResponse(String response) {
+                   Toast.makeText(TambahBarang.this, response, Toast.LENGTH_SHORT).show();
+               }
+           }, new Response.ErrorListener() {
+                       @Override
+                       public void onErrorResponse(VolleyError error) {
+                           Toast.makeText(TambahBarang.this, error.toString(), Toast.LENGTH_SHORT).show();
+                       }
+                   })
+           {
+               @Override
+               protected Map<String, String> getParams(){
+                   Map<String, String> params = new HashMap<>();
+                   params.put("nama_barang", namaBarang);
+                   params.put("harga_barang", hargaBarang);
+                   params.put("jumlah_barang", jumlahBarang);
 
-                       return params;
-                   }
-               };
-                RequestQueue requestQueue = Volley.newRequestQueue(TambahBarang.this);
-                requestQueue.add(request);
-            }
-
+                   return params;
+               }
+           };
+            RequestQueue requestQueue = Volley.newRequestQueue(TambahBarang.this);
+            requestQueue.add(request);
         });
+
+        imgBarang.setOnClickListener(view -> {
+            Intent i  = new Intent();
+            i.setType("image/*");
+            i.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(i, "Select Image"), 1);
+        });
+
     }
 
     private void getValue() {
@@ -84,4 +94,5 @@ public class TambahBarang extends AppCompatActivity {
         jumlahBarang = edtJumlahBarang.getText().toString();
         hargaBarang = edtHargaBarang.getText().toString();
     }
+
 }

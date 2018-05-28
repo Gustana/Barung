@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="400dp"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal|center_vertical"
     android:layout_marginEnd="16dp"
@@ -54,14 +54,14 @@
                     android:textSize="16sp"
                     app:met_floatingLabel="highlight" />
 
-                <ImageView
-                    android:id="@+id/imgEditNamaBarang"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_edit_black_24dp"
-                    android:layout_marginRight="8dp" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/imgEditNamaBarang"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_gravity="end|center_vertical"-->
+                    <!--android:layout_marginEnd="8dp"-->
+                    <!--android:src="@drawable/ic_edit_black_24dp"-->
+                    <!--android:layout_marginRight="8dp" />-->
 
                 </FrameLayout>
 
@@ -93,14 +93,14 @@
                         android:textSize="16sp"
                         app:met_floatingLabel="highlight" />
 
-                    <ImageView
-                        android:id="@+id/imgEditJumlahBarang"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="8dp"
-                        android:src="@drawable/ic_edit_black_24dp"
-                        android:layout_marginRight="8dp" />
+                    <!--<ImageView-->
+                        <!--android:id="@+id/imgEditJumlahBarang"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_gravity="end|center_vertical"-->
+                        <!--android:layout_marginEnd="8dp"-->
+                        <!--android:src="@drawable/ic_edit_black_24dp"-->
+                        <!--android:layout_marginRight="8dp" />-->
 
                 </FrameLayout>
 

@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ambystico.barung.Fragment.Fragment_Home;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -20,6 +21,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<DataBarang> dataBarangList;
     Context context;
     Intent i;
+    Fragment_Home activity;
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
