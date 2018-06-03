@@ -2,17 +2,18 @@ package ambystico.barung;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
-import ambystico.barung.Fragment.Fragment_Home;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,7 +22,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private List<DataBarang> dataBarangList;
     Context context;
     Intent i;
-    Fragment_Home activity;
 
     @Override
     public RecyclerHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,6 +35,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.txtHarga.setText(dataBarang.harga_barang);
         holder.txtJumlah.setText(dataBarang.jumlah_barang);
         holder.txtNama.setText(dataBarang.nama_barang);
+
+        byte[] decodeStream = android.util.Base64.decode(dataBarang.img_barang, android.util.Base64.DEFAULT);
+        Bitmap decodeByte = BitmapFactory.decodeByteArray(decodeStream, 0, decodeStream.length);
+
+        holder.imgBarang.setImageBitmap(decodeByte);
 
         holder.itemView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
@@ -58,6 +63,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             TextView txtHarga;
         @BindView(R.id.txtNama)
             TextView txtNama;
+        @BindView(R.id.imgBarang)
+            ImageView imgBarang;
 
         public RecyclerHolder(View itemView) {
             super(itemView);

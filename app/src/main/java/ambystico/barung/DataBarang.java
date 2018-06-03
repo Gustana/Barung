@@ -2,7 +2,7 @@ package ambystico.barung;
 
 public class DataBarang {
 
-    public String nama_barang, harga_barang, jumlah_barang;
+    public String nama_barang, harga_barang, jumlah_barang, img_barang;
 
     public String getNama_barang() {
         return nama_barang;

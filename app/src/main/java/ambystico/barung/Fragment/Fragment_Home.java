@@ -3,6 +3,7 @@ package ambystico.barung.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -57,9 +58,6 @@ public class Fragment_Home extends Fragment {
     Context context;
 
 
-    ProgressDialog progressDialog;
-
-
     public Fragment_Home() {
         // Required empty public constructor
     }
@@ -95,6 +93,7 @@ public class Fragment_Home extends Fragment {
                     dataBarang.harga_barang = json.getString("harga_barang");
                     dataBarang.jumlah_barang = json.getString("jumlah_barang");
                     dataBarang.nama_barang = json.getString("nama_barang");
+                    dataBarang.img_barang = json.getString("img_barang");
 
                     list.add(dataBarang);
                     adapter = new RecyclerViewAdapter(context, list);
@@ -113,7 +112,7 @@ public class Fragment_Home extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), error.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, error.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -124,25 +123,25 @@ public class Fragment_Home extends Fragment {
             startActivity(i);
         });
 
-        try{
-            handler.postDelayed(runnable, delay);
-        }catch (Exception e){
-            Log.e(TAG, "onCreate: error" );
-            e.printStackTrace();
-        }
+//        try{
+//            handler.postDelayed(runnable, delay);
+//        }catch (Exception e){
+//            Log.e(TAG, "onCreate: error" );
+//            e.printStackTrace();
+//        }
 
 
         return view;
     }
 
-    private final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            Log.i(TAG, "run: action");
-            requestQueue.add(request);
-            handler.postDelayed(runnable, delay);
-        }
-    };
+//    private final Runnable runnable = new Runnable() {
+//        @Override
+//        public void run() {
+//            Log.i(TAG, "run: action");
+//            requestQueue.add(request);
+//            handler.postDelayed(runnable, delay);
+//        }
+//    };
 
 
 }
