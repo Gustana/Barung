@@ -50,8 +50,9 @@ public class Fragment_Home extends Fragment {
 
     RequestQueue requestQueue;
     StringRequest request;
-    Handler handler = new Handler();
-    int delay = 1000;
+    Handler handler;
+    Runnable runnable;
+    int UPDATE_TIME = 1000;
 
     String URL = "http://192.168.8.104/custom/Dummy/Barang/Process/tampil_barang.php";
     String TAG = Fragment_Home.class.getSimpleName();
@@ -93,7 +94,7 @@ public class Fragment_Home extends Fragment {
                     dataBarang.harga_barang = json.getString("harga_barang");
                     dataBarang.jumlah_barang = json.getString("jumlah_barang");
                     dataBarang.nama_barang = json.getString("nama_barang");
-                    dataBarang.img_barang = json.getString("img_barang");
+                    dataBarang.img_barang = json.getString("image_data");
 
                     list.add(dataBarang);
                     adapter = new RecyclerViewAdapter(context, list);
@@ -123,25 +124,17 @@ public class Fragment_Home extends Fragment {
             startActivity(i);
         });
 
-//        try{
-//            handler.postDelayed(runnable, delay);
-//        }catch (Exception e){
-//            Log.e(TAG, "onCreate: error" );
-//            e.printStackTrace();
-//        }
-
+        handler = new Handler();
+        runnable = new Runnable() {
+            @Override
+            public void run() {
+                requestQueue.add(request);
+                list.clear();
+                handler.postDelayed(runnable, UPDATE_TIME);
+            }
+        };
+        handler.postDelayed(runnable, UPDATE_TIME);
 
         return view;
     }
-
-//    private final Runnable runnable = new Runnable() {
-//        @Override
-//        public void run() {
-//            Log.i(TAG, "run: action");
-//            requestQueue.add(request);
-//            handler.postDelayed(runnable, delay);
-//        }
-//    };
-
-
 }

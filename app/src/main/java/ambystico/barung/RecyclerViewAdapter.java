@@ -6,11 +6,18 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
@@ -36,10 +43,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.txtJumlah.setText(dataBarang.jumlah_barang);
         holder.txtNama.setText(dataBarang.nama_barang);
 
-        byte[] decodeStream = android.util.Base64.decode(dataBarang.img_barang, android.util.Base64.DEFAULT);
-        Bitmap decodeByte = BitmapFactory.decodeByteArray(decodeStream, 0, decodeStream.length);
+        Glide.with(context).load("http://"+dataBarang.img_barang).listener(new RequestListener<String, GlideDrawable>() {
+            @Override
+            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+                Toast.makeText(context, "Failed to load image", Toast.LENGTH_SHORT).show();
+                return false;
+            }
 
-        holder.imgBarang.setImageBitmap(decodeByte);
+            @Override
+            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+                return false;
+            }
+        }).into(holder.imgBarang);
 
         holder.itemView.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
